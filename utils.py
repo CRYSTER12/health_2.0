@@ -13,9 +13,13 @@ debug = os.getenv("ENV") == "debug"
 def send_mail(msg: str, title: str, to: str):
     msg += '\n\n【运行日志】\n' + get_log_string()
     if not debug:
-        post = requests.post(MAIL_SERVER_URL, data=json.dumps(
-            {"title": title, "body": msg, "dest": to}))
-        return post
+        server = yagmail.SMTP('2576002875@qq.com', 'ozsydzmhxuzddjhf',
+                              host='smtp.qq.com')  # , port=25, smtp_starttls=True, smtp_ssl=False
+        server.send(to, title, msg)
+        print("发送成功")
+        #post = requests.post(MAIL_SERVER_URL, data=json.dumps(
+         #   {"title": title, "body": msg, "dest": to}))
+        #return post
     else:
         logger.info(msg)
 
